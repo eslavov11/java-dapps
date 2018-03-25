@@ -1,5 +1,6 @@
 package com.java_dapps.store.controller;
 
+import com.java_dapps.store.service.ItemService;
 import com.topchain.node.entity.Node;
 import com.topchain.node.model.bindingModel.NotifyBlockModel;
 import com.topchain.node.model.viewModel.BlockViewModel;
@@ -20,22 +21,12 @@ import java.util.List;
 import static com.topchain.node.util.NodeUtils.notifyPeersForNewBlock;
 
 @RestController
-public class BlockController {
-    private BlockService blockService;
-    private RestTemplate restTemplate;
-    private NodeInfoViewModel nodeInfoViewModel;
-    private Node node;
-
+public class ItemController {
+    private ItemService itemService;
 
     @Autowired
-    public BlockController(BlockService blockService,
-                           RestTemplate restTemplate,
-                           Node node,
-                           NodeInfoViewModel nodeInfoViewModel) {
-        this.blockService = blockService;
-        this.restTemplate = restTemplate;
-        this.node = node;
-        this.nodeInfoViewModel = nodeInfoViewModel;
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
     }
 
     @GetMapping("/blocks")
