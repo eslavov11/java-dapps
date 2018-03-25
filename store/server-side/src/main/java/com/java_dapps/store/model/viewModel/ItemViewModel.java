@@ -1,10 +1,10 @@
 package com.java_dapps.store.model.viewModel;
 
-public class BalanceViewModel {
+public class ItemViewModel {
     private int confirmations;
     private long balance;
 
-    public BalanceViewModel() {
+    public ItemViewModel() {
     }
 
     public int getConfirmations() {

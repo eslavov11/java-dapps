@@ -1,15 +1,9 @@
 package com.java_dapps.store.service;
 
-import com.topchain.node.model.viewModel.BlockViewModel;
+import com.java_dapps.store.model.viewModel.ItemViewModel;
 
 import java.util.List;
 
 public interface ItemService {
-    List<BlockViewModel> getBlocks();
-
-    BlockViewModel getBlockByIndex(long index);
-
-    void updateBlockchain(List<BlockViewModel> blockViewModels);
-
-    boolean peerBlocksAreValid(List<BlockViewModel> blockViewModels);
+    List<ItemViewModel> getAll();
 }

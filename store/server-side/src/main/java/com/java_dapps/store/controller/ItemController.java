@@ -1,5 +1,6 @@
 package com.java_dapps.store.controller;
 
+import com.java_dapps.store.model.viewModel.ItemViewModel;
 import com.java_dapps.store.service.ItemService;
 import com.topchain.node.entity.Node;
 import com.topchain.node.model.bindingModel.NotifyBlockModel;
@@ -29,59 +30,24 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @GetMapping("/blocks")
-    public List<BlockViewModel> getBlocks() {
-        return this.blockService.getBlocks();
+    @GetMapping("/items")
+    public List<ItemViewModel> getItems() {
+        return this.itemService.getAll();
     }
 
-    @GetMapping("/blocks/{index}")
-    public ResponseEntity<BlockViewModel> getBlockByIndex(@PathVariable long index) {
-        BlockViewModel blockViewModel = this.blockService.getBlockByIndex(index);
+    @GetMapping("/item/{id}")
+    public ResponseEntity<ItemViewModel> getBlockByIndex(@PathVariable long id) {
+        ItemViewModel itemViewModel = this.itemService.getItem(id);
 
-        if (!blockViewModel.isExists()) {
+        if (!itemViewModel.isExists()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(blockViewModel, HttpStatus.OK);
+        return new ResponseEntity<>(itemViewModel, HttpStatus.OK);
     }
 
-    @PostMapping("/blocks/notify")
-    public ResponseMessageViewModel notify(@RequestBody NotifyBlockModel notifyBlockModel) {
-        if (notifyBlockModel.getIndex() == this.node.getBlocks().size() + 1 &&
-                notifyBlockModel.getCumulativeDifficulty() >
-                        this.nodeInfoViewModel.getCumulativeDifficulty()) {
-            setLongestChain(notifyBlockModel.getPeer().getUrl());
-
-            notifyPeersForNewBlock(notifyBlockModel, this.node.getPeers());
-        }
-
+    @PostMapping("/item/purchase")
+    public ResponseMessageViewModel purchaseItem(/* TODO: 26/03/18 id */ ) {
         return new ResponseMessageViewModel("Thank you for the notification.");
-    }
-
-    private void setLongestChain(String url) {
-        if (!peerChainIsLonger(url)) {
-            return;
-        }
-
-        HttpEntity<List<BlockViewModel>> entity = this.restTemplate
-                .exchange(url + "/blocks", HttpMethod.GET, null,
-                        new ParameterizedTypeReference<List<BlockViewModel>>() {
-                        });
-        List<BlockViewModel> blockViewModels = entity.getBody();
-        if (!this.blockService.peerBlocksAreValid(blockViewModels)) {
-            return;
-        }
-
-        this.blockService.updateBlockchain(blockViewModels);
-    }
-
-    private boolean peerChainIsLonger(String url) {
-        HttpEntity<NodeInfoViewModel> entity = this.restTemplate
-                .getForEntity(url + "/info",
-                        NodeInfoViewModel.class);
-        NodeInfoViewModel peerInfo = entity.getBody();
-
-        return peerInfo.getCumulativeDifficulty() >
-                this.nodeInfoViewModel.getCumulativeDifficulty();
     }
 }

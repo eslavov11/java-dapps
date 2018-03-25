@@ -1,12 +1,12 @@
 package com.java_dapps.store.model.bindingModel;
 
-public class MinedBlockModel {
+public class ItemModel {
     private long nonce;
 
     private String dateCreated;
     private String blockDataHash;
 
-    public MinedBlockModel() {
+    public ItemModel() {
     }
 
     public long getNonce() {
