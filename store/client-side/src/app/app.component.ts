@@ -3,6 +3,7 @@ import {Component} from '@angular/core';
 declare var require: any;
 var Web3 = require('web3');
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -26,20 +27,30 @@ export class AppComponent {
 
     // var acc = this.web3.eth.accounts.create();
     // console.log(acc)
-    let tx = {
-      to: '0x6B79F5949489D7d592828fA0A113a133E46214ae',
-      value: '200000000000000000',
-      gas: 4000000
-    };
+    // let tx = {
+    //   to: '0x6B79F5949489D7d592828fA0A113a133E46214ae',
+    //   value: '200000000000000000',
+    //   gas: 4000000
+    // };
+    //
+    // let _this = this;
+    // this.web3.eth.accounts.signTransaction(tx, '0x8f8468e0b2485db62b93d39fcbe222aa08bd4a01e9d54cfbc91ea1027d12b3ee')
+    //   .then(function (transaction) {
+    //     _this.web3.eth.sendSignedTransaction(transaction.rawTransaction)
+    //       .on('receipt', console.log);
+    //   });
+    // ;
 
-    let _this = this;
-    this.web3.eth.accounts.signTransaction(tx, '0x8f8468e0b2485db62b93d39fcbe222aa08bd4a01e9d54cfbc91ea1027d12b3ee')
-      .then(function (transaction) {
-        _this.web3.eth.sendSignedTransaction(transaction.rawTransaction)
-          .on('receipt', console.log);
-      });
-    ;
+    /*Encrypt / decrypt pr k*/
+    const privateKey = '0x8f8468e0b2485db62b93d39fcbe222aa08bd4a01e9d54cfbc91ea1027d12b3ee';
+    const password = 'strongpass';
+    let keystoreJsonV3 = this.web3.eth.accounts.encrypt(privateKey, password);
+    console.log(keystoreJsonV3)
 
+    // tODO: private key 0x or wihtout
+
+    let decryptedkey = this.web3.eth.accounts.decrypt(keystoreJsonV3, password);
+    console.log(decryptedkey)
 
   }
 }
