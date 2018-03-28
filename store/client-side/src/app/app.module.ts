@@ -10,6 +10,9 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {ContractService} from './shared/services/contract.service';
+import {CustomerLoginComponent} from './customer/customer-login/customer-login.component';
+import {ItemService} from "./shared/services/item.service";
+import {Customer} from "./shared/models/customer";
 
 @NgModule({
   declarations: [
@@ -17,7 +20,8 @@ import {ContractService} from './shared/services/contract.service';
     NavComponent,
     ItemListComponent,
     CustomerDetailComponent,
-    CustomerRegisterComponent
+    CustomerRegisterComponent,
+    CustomerLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,7 @@ import {ContractService} from './shared/services/contract.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [ContractService],
+  providers: [ContractService, ItemService, Customer],
   bootstrap: [AppComponent]
 })
 export class AppModule {

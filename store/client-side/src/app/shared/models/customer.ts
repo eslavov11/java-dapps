@@ -1,6 +1,7 @@
+import {Item} from "./item";
+
 export class Customer {
   address: string;
   name: string;
-  shippingAddress: string;
-  registrationDate: Date;
+  items: Item[];
 }
