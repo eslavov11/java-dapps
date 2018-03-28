@@ -1,25 +1,43 @@
 package com.java_dapps.store.model.viewModel;
 
 public class ItemViewModel {
-    private int confirmations;
-    private long balance;
+    private long id;
+    private String name;
+    private long price;
+    private boolean sold;
 
     public ItemViewModel() {
     }
 
-    public int getConfirmations() {
-        return confirmations;
+    public long getId() {
+        return id;
     }
 
-    public void setConfirmations(int confirmations) {
-        this.confirmations = confirmations;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public long getBalance() {
-        return balance;
+    public String getName() {
+        return name;
     }
 
-    public void setBalance(long balance) {
-        this.balance = balance;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
     }
 }

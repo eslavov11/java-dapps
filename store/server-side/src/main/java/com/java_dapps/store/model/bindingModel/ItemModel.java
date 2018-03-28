@@ -1,35 +1,25 @@
 package com.java_dapps.store.model.bindingModel;
 
 public class ItemModel {
-    private long nonce;
-
-    private String dateCreated;
-    private String blockDataHash;
+    private String name;
+    private long price;
 
     public ItemModel() {
     }
 
-    public long getNonce() {
-        return nonce;
+    public String getName() {
+        return name;
     }
 
-    public void setNonce(long nonce) {
-        this.nonce = nonce;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDateCreated() {
-        return dateCreated;
+    public long getPrice() {
+        return price;
     }
 
-    public void setDateCreated(String dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public String getBlockDataHash() {
-        return blockDataHash;
-    }
-
-    public void setBlockDataHash(String blockDataHash) {
-        this.blockDataHash = blockDataHash;
+    public void setPrice(long price) {
+        this.price = price;
     }
 }

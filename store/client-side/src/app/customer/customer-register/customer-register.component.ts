@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ContractService} from "../../shared/services/contract.service";
+import {ContractService} from '../../shared/services/contract.service';
 import {Router} from '@angular/router';
-import {NgForm} from "@angular/forms";
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-customer-register',

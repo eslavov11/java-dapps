@@ -1,25 +1,17 @@
 package com.java_dapps.store.controller;
 
+import com.java_dapps.store.model.bindingModel.ItemModel;
 import com.java_dapps.store.model.viewModel.ItemViewModel;
 import com.java_dapps.store.service.ItemService;
-import com.topchain.node.entity.Node;
-import com.topchain.node.model.bindingModel.NotifyBlockModel;
-import com.topchain.node.model.viewModel.BlockViewModel;
-import com.topchain.node.model.viewModel.NodeInfoViewModel;
-import com.topchain.node.model.viewModel.ResponseMessageViewModel;
-import com.topchain.node.service.BlockService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
-import static com.topchain.node.util.NodeUtils.notifyPeersForNewBlock;
 
 @RestController
 public class ItemController {
@@ -35,19 +27,29 @@ public class ItemController {
         return this.itemService.getAll();
     }
 
-    @GetMapping("/item/{id}")
-    public ResponseEntity<ItemViewModel> getBlockByIndex(@PathVariable long id) {
-        ItemViewModel itemViewModel = this.itemService.getItem(id);
+    @GetMapping("/items-for-purchase")
+    public List<ItemViewModel> getItemsForPurchase() {
+        return this.itemService.getAllForPurchase();
+    }
 
-        if (!itemViewModel.isExists()) {
+    @GetMapping("/item/{id}")
+    public ResponseEntity<ItemViewModel> getItem(@PathVariable long id) {
+        ItemViewModel itemViewModel = this.itemService.get(id);
+
+        if (itemViewModel == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(itemViewModel, HttpStatus.OK);
     }
 
-    @PostMapping("/item/purchase")
-    public ResponseMessageViewModel purchaseItem(/* TODO: 26/03/18 id */ ) {
-        return new ResponseMessageViewModel("Thank you for the notification.");
+    @PostMapping("/item/add")
+    public void addItem(ItemModel itemModel) {
+        this.itemService.create(itemModel);
+    }
+
+    @PostMapping("/item/{id}/buy")
+    public void buyItem(@PathVariable long id) {
+        this.itemService.buyItem(id);
     }
 }

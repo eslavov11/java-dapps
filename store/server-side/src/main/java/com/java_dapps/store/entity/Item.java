@@ -12,7 +12,9 @@ public class Item implements Serializable {
 
     private String name;
 
-    private long priceWei;
+    private long price;
+
+    private boolean sold;
 
     public Item() {
     }
@@ -33,11 +35,19 @@ public class Item implements Serializable {
         this.name = name;
     }
 
-    public long getPriceWei() {
-        return priceWei;
+    public long getPrice() {
+        return price;
     }
 
-    public void setPriceWei(long priceWei) {
-        this.priceWei = priceWei;
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
     }
 }
