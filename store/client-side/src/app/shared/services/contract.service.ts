@@ -169,7 +169,7 @@ export class ContractService {
     const customer = new Customer();
     customer.address = account;
     customer.name = customerObj[0];
-    //TODO: items?
+    //TODO: get items?
 
     return customer;
   }
