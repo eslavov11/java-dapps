@@ -16,9 +16,9 @@ public class User implements UserDetails, Serializable {
 
     private String username;
 
-    private String email;
-
     private String password;
+
+    private String keystoreJson;
 
     private boolean isAccountNonExpired;
 
@@ -83,14 +83,6 @@ public class User implements UserDetails, Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public void setPassword(String password) {

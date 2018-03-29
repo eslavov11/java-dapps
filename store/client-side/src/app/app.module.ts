@@ -13,6 +13,9 @@ import {ContractService} from './shared/services/contract.service';
 import {CustomerLoginComponent} from './customer/customer-login/customer-login.component';
 import {ItemService} from "./shared/services/item.service";
 import {Customer} from "./shared/models/customer";
+import {CustomerService} from "./shared/services/customer.service";
+import {AuthService} from "./shared/services/auth.service";
+import {Web3Service} from "./shared/services/web3.service";
 
 @NgModule({
   declarations: [
@@ -29,7 +32,7 @@ import {Customer} from "./shared/models/customer";
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [ContractService, ItemService, Customer],
+  providers: [ContractService, Web3Service, AuthService, ItemService, CustomerService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

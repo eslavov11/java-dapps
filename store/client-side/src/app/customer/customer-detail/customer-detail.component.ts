@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ContractService} from "../../shared/services/contract.service";
 import {Customer} from "../../shared/models/customer";
 import {ActivatedRoute} from "@angular/router";
+import {CustomerService} from "../../shared/services/customer.service";
 
 @Component({
   selector: 'app-customer-detail',
@@ -14,6 +15,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   private sub: any;
 
   constructor(private contractService: ContractService,
+              private customer: CustomerService,
               private route: ActivatedRoute,) {
     this.customer = new Customer();
     this.balance = 0;

@@ -16,6 +16,10 @@ public class Item implements Serializable {
 
     private boolean sold;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
     public Item() {
     }
 

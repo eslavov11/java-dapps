@@ -6,13 +6,11 @@ import com.java_dapps.store.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 public class ItemController {
     private ItemService itemService;
@@ -22,12 +20,12 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @GetMapping("/items")
+    @GetMapping("/item")
     public List<ItemViewModel> getItems() {
         return this.itemService.getAll();
     }
 
-    @GetMapping("/items-for-purchase")
+    @GetMapping("/item/for-sale")
     public List<ItemViewModel> getItemsForPurchase() {
         return this.itemService.getAllForPurchase();
     }
