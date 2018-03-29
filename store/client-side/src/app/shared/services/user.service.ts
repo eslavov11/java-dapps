@@ -1,14 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 declare var require: any;
 var Web3 = require('web3');
-import {default as contract} from 'truffle-contract';
-
-import {ContractConfig} from '../config/contract-config';
-import {Customer} from "../models/customer";
-import {Item} from "../models/item";
 
 @Injectable()
-export class AuthService {
+export class UserService {
   public accounts: any[] = [];
   public account: any;
   public accountBalance: number;

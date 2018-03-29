@@ -6,5 +6,7 @@ import com.java_dapps.store.model.viewModel.CustomerViewModel;
 public interface CustomerService {
     CustomerViewModel get(long id);
 
+    CustomerViewModel getByUserId(long userId);
+
     void create(CustomerRegisterModel customerRegisterModel);
 }

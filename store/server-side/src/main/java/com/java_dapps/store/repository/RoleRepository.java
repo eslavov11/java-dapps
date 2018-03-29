@@ -1,10 +1,10 @@
 package com.java_dapps.store.repository;
 
-import com.java_dapps.store.entity.User;
+import com.java_dapps.store.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findOneByUsername(String username);
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findOneByAuthority(String authority);
 }
