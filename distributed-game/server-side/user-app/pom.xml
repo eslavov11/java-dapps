@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.distributed-game</groupId>
-    <artifactId>user-app</artifactId>
+    <artifactId>distributed-game-user-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -38,7 +38,7 @@
         </dependency>
         <dependency>
             <groupId>com.distributed-game</groupId>
-            <artifactId>data-access</artifactId>
+            <artifactId>distributed-game-data-access</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
