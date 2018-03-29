@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {ContractService} from "../shared/services/contract.service";
-import {Seller} from "../shared/models/seller";
-import {Customer} from "../shared/models/customer";
+import {ContractService} from '../shared/services/contract.service';
+import {UserService} from '../shared/services/user.service';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -11,30 +11,32 @@ import {Customer} from "../shared/models/customer";
 })
 export class NavComponent implements OnInit {
   private balance: number;
-  private seller: Seller;
-  private customer: Customer;
-  private isSeller: boolean;
-  private isCustomer: boolean;
-  private isRegistered: boolean;
 
 
-  constructor(private contractService: ContractService) {
-    this.seller = new Seller();
-    this.customer = new Customer();
-
+  constructor(private contractService: ContractService,
+              private userService: UserService,
+              private http: HttpClient,
+              private router: Router) {
+    // this.userService.authenticate(undefined, undefined);
     this.balance = 0;
   }
 
   async ngOnInit() {
-    await this.contractService.loadAccounts();
-    await this.contractService.getBalance();
-
-    this.balance = this.contractService.accountBalance;
-    this.seller = await this.contractService.getSeller(this.contractService.account);
-    this.customer = await this.contractService.getCustomer(this.contractService.account);
-
-    this.isSeller = !!this.seller;
-    this.isCustomer = !!this.customer;
-    this.isRegistered = this.isSeller || this.isCustomer;
+    // await this.contractService.loadAccounts();
+    // await this.contractService.getBalance();
+    //
+    // this.balance = this.contractService.accountBalance;
   }
+
+  authenticated() {
+    return this.userService.authenticated;
+  }
+
+  logout() {
+    // this.http.post('logout', {}).finally(() => {
+    //   this.userService.authenticated = false;
+    //   this.router.navigateByUrl('/');
+    // }).subscribe();
+  }
+
 }

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {default as contract} from 'truffle-contract';
+// import {default as contract} from 'truffle-contract';
 
 import {ContractConfig} from '../config/contract-config';
-import {Customer} from "../models/customer";
-import {Item} from "../models/item";
-import {Web3Service} from "./web3.service";
+import {Customer} from '../models/customer';
+import {Item} from '../models/item';
+import {Web3Service} from './web3.service';
 
 @Injectable()
 export class ContractService {
@@ -15,29 +15,30 @@ export class ContractService {
   }
 
   public initContract() {
-    const myContract = this.web3Service.web3.eth.contract(ContractConfig.contract.abi);
-    console.log(myContract);
-    this.contract = myContract.at(ContractConfig.contract.address);
-    console.log(contract);
+    // const myContract = this.web3Service.web3.eth.contract(ContractConfig.contract.abi);
+    // console.log(myContract);
+    // this.contract = myContract.at(ContractConfig.contract.address);
+    // console.log(this.contract);
   }
 
   public async registerCustomer(name: string) {
     this.contract.registerCustomer(name, function (error, result) {
-      if (!error)
+      if (!error) {
         console.log(result);
-      else
+      } else {
         console.error(error);
+      }
     });
 
-    await this.getBalance();
+    // await this.getBalance();
   }
 
   public async getCustomer(account: any) {
     const customerObj = await new Promise((resolve, reject) => {
       this.contract.getCustomer(account, function (error, result) {
-        if (!error)
+        if (!error) {
           resolve(result);
-        else {
+        } else {
           resolve(false);
           console.log(error);
         }
@@ -61,10 +62,12 @@ export class ContractService {
   public async addItem(item: Item) {
     return await new Promise((resolve, reject) => {
       this.contract.addPart(item.description, this.web3Service.web3.toWei(item.price, 'ether'), function (error, result) {
-        if (!error)
+        if (!error) {
           resolve(result);
-        else
+        }
+        else {
           console.error(error);
+        }
       });
     });
   }
@@ -72,18 +75,20 @@ export class ContractService {
   public async getItem(id: number) {
     const itemObj = await new Promise((resolve, reject) => {
       this.contract.getPartForSale(id, function (error, result) {
-        if (!error)
+        if (!error) {
           resolve(result);
-        else
+        }
+        else {
           console.error(error);
+        }
       });
     });
 
     const item = new Item();
     item.id = id;
-    item.description = this.web3Service.web3.toUtf8(partObj[0]);
-    item.price = this.web3Service.web3.fromWei(partObj[1], 'ether').toString(10);
-    item.sold = partObj[2];
+    item.description = this.web3Service.web3.toUtf8(itemObj[0]);
+    item.price = this.web3Service.web3.fromWei(itemObj[1], 'ether').toString(10);
+    item.sold = itemObj[2];
 
     return item;
   }
@@ -92,10 +97,12 @@ export class ContractService {
     return await new Promise((resolve, reject) => {
       this.contract.buyPart(itemId, {value: this.web3Service.web3.toWei(price, 'ether')},
         function (error, result) {
-          if (!error)
+          if (!error) {
             resolve(result);
-          else
+          }
+          else {
             console.error(error);
+          }
         });
     });
   }

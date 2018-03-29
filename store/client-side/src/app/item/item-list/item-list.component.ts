@@ -14,10 +14,10 @@ export class ItemListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.itemService.getItemsForSale()
-      .subscribe((data: Array<Item>) => {
-        this.items = data as Array<Item>;
-      });
+    // this.itemService.getItemsForSale()
+    //   .subscribe((data: Array<Item>) => {
+    //     this.items = data as Array<Item>;
+    //   });
   }
 
 }

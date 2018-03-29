@@ -14,8 +14,8 @@ export class CustomerRegisterComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.contractService.loadAccounts();
-    await this.contractService.getBalance();
+    // await this.contractService.loadAccounts();
+    // await this.contractService.getBalance();
   }
 
   async onSubmit(f: NgForm) {

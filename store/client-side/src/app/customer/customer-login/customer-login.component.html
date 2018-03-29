@@ -1,6 +1,9 @@
 <h1 class="h1 text-center">Login as Customer</h1>
 
-<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+<div class="alert alert-danger" [hidden]="!error">
+  There was a problem logging in. Please try again.
+</div>
+<form #f="ngForm" (ngSubmit)="login(f)">
   <div class="form-group">
     <label for="username">Username</label>
     <input type="text" required="required" class="form-control"
@@ -14,4 +17,8 @@
   </div>
 
   <button type="submit" class="btn btn-primary">Login</button>
+
+  <br/>
+  <br/>
+  <a routerLink="/customer/register">Register as customer</a>
 </form>

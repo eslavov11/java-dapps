@@ -15,7 +15,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   private sub: any;
 
   constructor(private contractService: ContractService,
-              private customer: CustomerService,
+              private customerService: CustomerService,
               private route: ActivatedRoute,) {
     this.customer = new Customer();
     this.balance = 0;
@@ -29,16 +29,16 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
 
   async load(params: any) {
     const address = params['address'];
-    if (address) {
-      this.balance = await this.contractService.getBalanceForAccount(address);
-      this.customer = await this.contractService.getCustomer(address);
-    } else {
-      await this.contractService.loadAccounts();
-      await this.contractService.getBalance();
-
-      this.balance = this.contractService.accountBalance;
-      this.customer = await this.contractService.getCustomer(this.contractService.account);
-    }
+    // if (address) {
+    //   this.balance = await this.contractService.getBalanceForAccount(address);
+    //   this.customer = await this.contractService.getCustomer(address);
+    // } else {
+    //   await this.contractService.loadAccounts();
+    //   await this.contractService.getBalance();
+    //
+    //   this.balance = this.contractService.accountBalance;
+    //   this.customer = await this.contractService.getCustomer(this.contractService.account);
+    // }
   }
 
   ngOnDestroy() {

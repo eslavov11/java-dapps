@@ -25,6 +25,6 @@ export class ItemService {
   }
 
   public buyItem(id) {
-    return this.http.post(this.itemUrl + id + '/buy');
+    return this.http.post(this.itemUrl + id + '/buy', null);
   }
 }

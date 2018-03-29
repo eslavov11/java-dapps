@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 declare var require: any;
-var Web3 = require('web3');
+const Web3 = require('web3');
 
 @Injectable()
 export class Web3Service {
@@ -28,28 +28,28 @@ export class Web3Service {
     return this.web3.eth.accounts.decrypt(keystoreJsonV3, password);
   }
 
-  public async loadAccounts() {
-    if (this.account == null) {
-      this.account = await new Promise((resolve, reject) => {
-        this.web3.eth.getAccounts((err, accs) => {
-          if (err != null) {
-            alert('There was an error fetching your accounts.');
-            return;
-          }
-
-          if (accs.length === 0) {
-            alert('Couldnt get any accounts! Make sure your Ethereum client is configured correctly.');
-            return;
-          }
-
-          resolve(accs[0]);
-          this.accounts = accs;
-        });
-      });
-    }
-
-    return Promise.resolve(this.account);
-  }
+  // public async loadAccounts() {
+  //   if (this.account == null) {
+  //     this.account = await new Promise((resolve, reject) => {
+  //       this.web3.eth.getAccounts((err, accs) => {
+  //         if (err != null) {
+  //           alert('There was an error fetching your accounts.');
+  //           return;
+  //         }
+  //
+  //         if (accs.length === 0) {
+  //           alert('Couldnt get any accounts! Make sure your Ethereum client is configured correctly.');
+  //           return;
+  //         }
+  //
+  //         resolve(accs[0]);
+  //         this.accounts = accs;
+  //       });
+  //     });
+  //   }
+  //
+  //   return Promise.resolve(this.account);
+  // }
 
   public async setDefaultAccount() {
     if (this.web3.eth.defaultAccount == null) {
@@ -73,22 +73,22 @@ export class Web3Service {
     return Promise.resolve(this.web3.eth.defaultAccount);
   }
 
-  public async getBalance(): Promise<number> {
-    if (this.account != null) {
-      this.accountBalance = await new Promise((resolve, reject) => {
-        this.web3.eth.defaultAccount = this.account;
-        this.web3.eth.getBalance(this.account, (err, balance) => {
-          if (err != null) {
-            alert('There was an error getting your balance.');
-            return;
-          }
-          resolve(this.web3.fromWei(balance, 'ether'));
-        });
-      }) as number;
-    }
-
-    return Promise.resolve(this.accountBalance);
-  }
+  // public async getBalance(): Promise<number> {
+  //   if (this.account != null) {
+  //     this.accountBalance = await new Promise((resolve, reject) => {
+  //       this.web3.eth.defaultAccount = this.account;
+  //       this.web3.eth.getBalance(this.account, (err, balance) => {
+  //         if (err != null) {
+  //           alert('There was an error getting your balance.');
+  //           return;
+  //         }
+  //         resolve(this.web3.fromWei(balance, 'ether'));
+  //       });
+  //     }) as number;
+  //   }
+  //
+  //   return Promise.resolve(this.accountBalance);
+  // }
 
   public async getBalance(account: any): Promise<number> {
     const balanceFromAccount = await new Promise((resolve, reject) => {
