@@ -1,0 +1,17 @@
+<h1 class="h1 text-center">Login as Customer</h1>
+
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" required="required" class="form-control"
+           id="username" name="username" ngModel placeholder="username">
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" required="required" class="form-control"
+           id="password" name="password" ngModel>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>
