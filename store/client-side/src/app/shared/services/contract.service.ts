@@ -3,11 +3,8 @@ import * as Web3 from 'web3';
 import {default as contract} from 'truffle-contract';
 
 import {ContractConfig} from '../config/contract-config';
-import {Seller} from "../models/seller";
 import {Customer} from "../models/customer";
-import {Car} from "../models/car";
-import {Part} from "../models/part";
-import {Order} from "../models/order";
+import {Item} from "../models/item";
 
 @Injectable()
 export class ContractService {
@@ -16,7 +13,7 @@ export class ContractService {
   public accountBalance: number;
   private web3: any;
   private contract;
-  private LOCAL_PROVIDER_URL = 'http://localhost:8545';
+  private PROVIDER_URL = 'https://ropsten.infura.io';  // 'http://localhost:8545' || 'http://127.0.0.1:7545' || 'https://ropsten.infura.io'
 
   constructor() {
     this.initWeb3();
@@ -105,7 +102,7 @@ export class ContractService {
       this.web3 = (window as any).web3;
     } else {
       (window as any).web3 =
-        new Web3(new Web3.providers.HttpProvider(this.LOCAL_PROVIDER_URL));
+        new Web3(new Web3.providers.HttpProvider(this.PROVIDER_URL));
     }
 
     const myContract = this.web3.eth.contract(ContractConfig.contract.abi);
@@ -113,42 +110,6 @@ export class ContractService {
     this.contract = myContract.at(ContractConfig.contract.address);
     // let c = new this.web3.eth.Contract(ContractConfig.contract.abi, '0xFa028Ad8D553803078af63130b059A3de1CE37Bd');
     console.log(contract);
-  }
-
-  public async registerSeller(name: string, shippingAddress: string) {
-    this.contract.registerSeller(name, shippingAddress, function (error, result) {
-      //TODO: notify
-      if (!error)
-        console.log(result)
-      else
-        console.error(error);
-    });
-  }
-
-  public async getSeller(account: any) {
-    const sellerObj = await new Promise((resolve, reject) => {
-      this.contract.getSeller(account, function (error, result) {
-        if (!error)
-          resolve(result);
-        else {
-          resolve(false);
-          console.log(error);
-        }
-      });
-    });
-
-    if (!sellerObj) {
-      return null;
-    }
-
-    const seller = new Seller();
-    seller.address = account;
-    seller.name = sellerObj[0];
-    seller.registrationDate = new Date(sellerObj[1].c[0] * 1000);
-    seller.shippingAddress = sellerObj[2];
-    seller.cars = sellerObj[3];
-
-    return seller;
   }
 
   public async getCars(carsId: number[]) {
@@ -178,9 +139,8 @@ export class ContractService {
     return cars;
   }
 
-  public async registerCustomer(name: string, shippingAddress: string) {
-    this.contract.registerCustomer(name, shippingAddress, function (error, result) {
-      //TODO: notify
+  public async registerCustomer(name: string) {
+    this.contract.registerCustomer(name, function (error, result) {
       if (!error)
         console.log(result);
       else
@@ -209,49 +169,14 @@ export class ContractService {
     const customer = new Customer();
     customer.address = account;
     customer.name = customerObj[0];
-    customer.registrationDate = new Date(customerObj[1].c[0] * 1000);
-    customer.shippingAddress = customerObj[2];
+    //TODO: get items?
 
     return customer;
   }
 
-  public async registerCar(vin: string, metaIpfsHash: string) {
+  public async addItem(item: Item) {
     return await new Promise((resolve, reject) => {
-      this.contract.registerCar(vin, metaIpfsHash, function (error, result) {
-        if (!error)
-          resolve(result);
-        else
-          console.error(error);
-      });
-    });
-  }
-
-  public async getCar(id: number) {
-    const carObj = await new Promise((resolve, reject) => {
-      this.contract.getCar(id, function (error, result) {
-        if (!error)
-          resolve(result);
-        else
-          console.error(error);
-      });
-    });
-
-    const car = new Car();
-    car.vin = this.web3.toUtf8(carObj[0]);
-    car.metaIpfsHash = this.web3.toAscii(carObj[1]);
-    car.seller = carObj[2];
-
-    return car;
-  }
-
-  public async addPart(partType: string,
-                       carId: number,
-                       price: string,
-                       daysForDelivery: number,
-                       metaIpfsHash: string) {
-    return await new Promise((resolve, reject) => {
-      this.contract.addPart(partType, carId, this.web3.toWei(price, 'ether'),
-        daysForDelivery, metaIpfsHash, function (error, result) {
+      this.contract.addPart(item.description, this.web3.toWei(item.price, 'ether'), function (error, result) {
           if (!error)
             resolve(result);
           else
@@ -260,8 +185,8 @@ export class ContractService {
     });
   }
 
-  public async getPart(id: number) {
-    const partObj = await new Promise((resolve, reject) => {
+  public async getItem(id: number) {
+    const itemObj = await new Promise((resolve, reject) => {
       this.contract.getPartForSale(id, function (error, result) {
         if (!error)
           resolve(result);
@@ -270,19 +195,18 @@ export class ContractService {
       });
     });
 
-    const part = new Part();
-    part.partType = this.web3.toUtf8(partObj[0]);
-    part.car = partObj[1].toString(10);
-    part.price = this.web3.fromWei(partObj[2], 'ether').toString(10);
-    part.daysForDelivery = partObj[3].toString(10);
-    part.metaIpfsHash = this.web3.toAscii(partObj[4]);
+    const item = new Item();
+    item.id = id;
+    item.description = this.web3.toUtf8(partObj[0]);
+    item.price = this.web3.fromWei(partObj[1], 'ether').toString(10);
+    item.sold = partObj[2];
 
-    return part;
+    return item;
   }
 
-  public async buyPart(partId: number, price: number) {
+  public async buyItem(itemId: number, price: number) {
     return await new Promise((resolve, reject) => {
-      this.contract.buyPart(partId, {value: this.web3.toWei(price, 'ether')},
+      this.contract.buyPart(itemId, {value: this.web3.toWei(price, 'ether')},
         function (error, result) {
           if (!error)
             resolve(result);
@@ -290,25 +214,5 @@ export class ContractService {
             console.error(error);
         });
     });
-  }
-
-  public async getOrder(id: number) {
-    const orderObj = await new Promise((resolve, reject) => {
-      this.contract.getOrder(id, function (error, result) {
-        if (!error)
-          resolve(result);
-        else
-          console.error(error);
-      });
-    });
-
-    const order = new Order();
-    order.part = orderObj[0].toString(10);
-    order.deliveryDate = orderObj[1].toString(10) * 1000;
-    order.customer = orderObj[3];
-    order.seller = orderObj[3];
-    order.status = orderObj[4];
-
-    return order;
   }
 }
