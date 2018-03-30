@@ -3,20 +3,11 @@ package com.java_dapps.store.model.viewModel;
 import java.util.List;
 
 public class CustomerViewModel {
-    private String name;
     private String username;
     private String keystoreJson;
     private List<ItemViewModel> items;
 
     public CustomerViewModel() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUsername() {

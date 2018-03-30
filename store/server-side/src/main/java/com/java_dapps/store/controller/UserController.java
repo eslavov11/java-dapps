@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins="*", maxAge=3600)
 @RestController
 public class UserController {
     private UserService userService;
@@ -17,17 +17,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/user")
+    @GetMapping("/user")
+    @ResponseBody
     public Principal user(Principal user) {
         return user;
     }
-    // TODO: 29-Mar-18
-    /*@GetMapping("/login")
-    public String getLoginPage(@RequestParam(required = false) String error, Model model) {
-        if (error != null) {
-            model.addAttribute("error", Errors.INVALID_CREDENTIALS);
-        }
 
+
+    @GetMapping("/login")
+    public String login() {
         return "login";
-    }*/
+    }
 }

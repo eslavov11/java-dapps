@@ -1,21 +1,12 @@
 package com.java_dapps.store.model.bindingModel;
 
 public class UserRegisterModel {
-    private String name;
     private String username;
     private String password;
     private String keystoreJson;
     private String additionalRole;
 
     public UserRegisterModel() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUsername() {

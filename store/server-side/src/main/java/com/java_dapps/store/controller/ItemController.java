@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ItemController {
     private ItemService itemService;
@@ -42,7 +42,7 @@ public class ItemController {
     }
 
     @PostMapping("/item/add")
-    public void addItem(ItemModel itemModel) {
+    public void addItem(@RequestBody ItemModel itemModel) {
         this.itemService.create(itemModel);
     }
 

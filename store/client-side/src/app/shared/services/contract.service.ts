@@ -21,8 +21,8 @@ export class ContractService {
     // console.log(this.contract);
   }
 
-  public async registerCustomer(name: string) {
-    this.contract.registerCustomer(name, function (error, result) {
+  public async registerCustomer(username: string) {
+    this.contract.registerCustomer(username, function (error, result) {
       if (!error) {
         console.log(result);
       } else {
@@ -51,7 +51,7 @@ export class ContractService {
 
     const customer = new Customer();
     customer.address = account;
-    customer.name = customerObj[0];
+    customer.username = customerObj[0];
     customer.items = [];
     //Todo: CUSTOMEROBJ[1].c ???
     //customerObj[1].toArray().forEach(itemId => );
