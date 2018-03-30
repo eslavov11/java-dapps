@@ -13,7 +13,11 @@ export class CustomerService {
   private customerUrl = 'http://localhost:8080/customer/';
 
   public createCustomer(customer) {
-    return this.http.post(this.customerUrl + 'register', customer);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    });
+
+    return this.http.post(this.customerUrl + 'register', JSON.stringify(customer), {headers: headers});
   }
 
   public getCustomer() {

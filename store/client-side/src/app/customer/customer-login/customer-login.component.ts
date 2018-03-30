@@ -22,10 +22,19 @@ export class CustomerLoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {
-    this.userService.authenticate(this.credentials, () => {
-      this.router.navigateByUrl('/');
-    });
+  login(f: NgForm) {
+    this.credentials.username = f.value.username;
+    this.credentials.password = f.value.password;
+    this.userService.login(this.credentials).subscribe(
+      data => {
+        this.router.navigate(['/']);
+      },
+      error => {
+      });
+
+    // this.userService.authenticate(this.credentials, () => {
+    //   this.router.navigateByUrl('/');
+    // });
 
     return false;
   }

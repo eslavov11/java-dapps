@@ -12,8 +12,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 /**
@@ -36,19 +38,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //    protected void configure(HttpSecurity http) throws Exception {
 //        http
 //                .authorizeRequests()
-//                .antMatchers("/", "/customer/**", "/item/add").permitAll()
+//                .antMatchers("/login",  "/customer/**", "/item/add").permitAll()
 //                .antMatchers("/item/{\\\\d+}/buy").hasRole("CUSTOMER")
-////                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
 //                .and()
 //                .formLogin().loginPage("/login").permitAll()
 //                .usernameParameter("username")
 //                .passwordParameter("password")
-//                .and()
-//                .rememberMe()
-//                .rememberMeCookieName("RememberMe")
-//                .rememberMeParameter("rememberMe")
-//                .key("SecretKey")
-//                .tokenValiditySeconds(100000)
 //                .and()
 //                .logout().logoutSuccessUrl("/login?logout").permitAll()
 ////                .and()
@@ -58,18 +54,41 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //        ;
 //    }
 
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .httpBasic().and()
+//                .authorizeRequests()
+//                .antMatchers("/user", "/login", "/customer/register",
+//                        "/item/for-sale", "/item/add").permitAll()
+////                .anyRequest().authenticated()
+//                .and()
+//                .csrf()
+//                .disable()
+//                ;
+//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic().and()
+        http.cors().and()
+                // starts authorizing configurations
                 .authorizeRequests()
-                .antMatchers("/user", "/login", "/customer/register",
-                        "/item/for-sale", "/item/add").permitAll()
-//                .anyRequest().authenticated()
+                // ignoring the guest's urls "
+                .antMatchers("/customer/register","/login","/logout", "item/for-purchase").permitAll()
+                // authenticate all remaining URLS
+                .anyRequest().fullyAuthenticated().and()
+      /* "/logout" will log the user out by invalidating the HTTP Session,
+       * cleaning up any {link rememberMe()} authentication that was configured, */
+                .logout()
+                .permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
                 .and()
-                .csrf()
-                .disable()
-                ;
+                // enabling the basic authentication
+                .httpBasic().and()
+                // configuring the session on the server
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
+                // disabling the CSRF - Cross Site Request Forgery
+                .csrf().disable();
     }
 
     @Bean

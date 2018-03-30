@@ -22,7 +22,10 @@
         </div>
         <div [hidden]="!authenticated()">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/logout">Logout</a>
+            <a class="nav-link" routerLink="/customer/detail">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="" (click)="logout()">Logout</a>
           </li>
         </div>
     </ul>

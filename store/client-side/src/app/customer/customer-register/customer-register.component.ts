@@ -28,7 +28,12 @@ export class CustomerRegisterComponent implements OnInit {
       username: f.value.username,
       password: f.value.password,
     };
-    this.customerService.createCustomer(customer);
-    this.router.navigate(['']);
+    this.customerService.createCustomer(customer).subscribe(
+      data => {
+        alert('Registration successful');
+        this.router.navigate(['/customer/login']);
+      },
+      error => {
+      });
   }
 }

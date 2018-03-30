@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 declare var require: any;
-const Web3 = require('web3');
+// const Web3 = require('web3');
 
 @Injectable()
 export class Web3Service {
@@ -15,7 +15,7 @@ export class Web3Service {
   }
 
   public initWeb3() {
-    this.web3 = new Web3(this.PROVIDER_URL);
+    this.web3 = null; //new Web3(this.PROVIDER_URL);
   }
 
   public createAndEncryptAccount(password) {
