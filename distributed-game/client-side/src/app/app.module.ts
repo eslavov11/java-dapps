@@ -5,6 +5,10 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserRegisterComponent } from './user/user-register/user-register.component';
+import {AppRoutingModule} from "./app-routing.module";
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
+import {UserService} from './shared/services/user.service';
 
 
 @NgModule({
@@ -14,9 +18,12 @@ import { UserRegisterComponent } from './user/user-register/user-register.compon
     UserRegisterComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

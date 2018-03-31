@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from "@angular/forms";
-import {UserService} from "../shared/services/user.service";
+import {UserService} from "../../shared/services/user.service";
 
 @Component({
   selector: 'app-user-register',
@@ -19,12 +19,14 @@ export class UserRegisterComponent implements OnInit {
       username: f.value.username,
       password: f.value.password,
     };
-    this.userService.createUser(user).subscribe(
-      data => {
-        alert('Registration successful');
-        this.router.navigate(['/user/detail']);
-      },
-      error => {
-      });
+
+    this.userService.initializeWebSocketConnection();
+    // this.userService.createUser(user).subscribe(
+    //   data => {
+    //     alert('Registration successful');
+    //     this.router.navigate(['/user/detail']);
+    //   },
+    //   error => {
+    //   });
   }
 }
