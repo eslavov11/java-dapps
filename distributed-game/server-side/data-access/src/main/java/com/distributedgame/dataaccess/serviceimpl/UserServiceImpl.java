@@ -2,6 +2,7 @@ package com.distributedgame.dataaccess.serviceimpl;
 
 import com.distributedgame.dataaccess.entity.User;
 import com.distributedgame.dataaccess.model.bindingmodel.UserRegisterModel;
+import com.distributedgame.dataaccess.model.viewmodel.UserViewModel;
 import com.distributedgame.dataaccess.repository.UserRepository;
 import com.distributedgame.dataaccess.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -21,14 +22,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(UserRegisterModel userRegisterModel) {
+    public UserViewModel register(UserRegisterModel userRegisterModel) {
         User user = this.modelMapper.map(userRegisterModel, User.class);
 
-        return this.repository.saveAndFlush(user);
+        User createdUser = this.repository.saveAndFlush(user);
+        return this.modelMapper.map(createdUser, UserViewModel.class);
     }
 
     @Override
     public User getById(long userId) {
         return this.repository.getOne(userId);
+    }
+
+    @Override
+    public UserViewModel getViewModelById(long userId) {
+        return this.modelMapper.map(this.getById(userId), UserViewModel.class);
     }
 }

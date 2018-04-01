@@ -1,30 +1,37 @@
 package com.distributedgame.userapp.controller.controller;
 
+import com.distributedgame.dataaccess.model.bindingmodel.UserRegisterModel;
+import com.distributedgame.dataaccess.model.viewmodel.UserViewModel;
+import com.distributedgame.dataaccess.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.distributedgame.userapp.controller.util.Utils.serializeJSON;
+
 @RestController
 public class UserController {
+    private UserService service;
     private SimpMessagingTemplate template;
 
     @Autowired
-    public UserController(SimpMessagingTemplate template) {
+    public UserController(UserService service,
+                          SimpMessagingTemplate template) {
+        this.service = service;
         this.template = template;
     }
 
 
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public Greeting greeting(HelloMessage message) throws Exception {
-        Thread.sleep(1000); // simulated delay
+    @MessageMapping("/user/register")
+    @SendTo("/user/registration")
+    public UserViewModel greeting(UserRegisterModel userRegisterModel) throws Exception {
+        UserViewModel userViewModel = this.service.register(userRegisterModel);
 
-        long userId = 333;
-        new Thread(new GameModuleConnectRunnable(userId)).start();
+        new Thread(new GameModuleConnectRunnable(userViewModel.getId())).start();
 
-        return new Greeting("Hello, " + message.getName() + "!");
+        return userViewModel;
     }
 
     private class GameModuleConnectRunnable implements Runnable {
@@ -35,15 +42,13 @@ public class UserController {
         }
 
         public void run() {
-            try {
-                Thread.sleep(3000); // simulated delay
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            // TODO: 01/04/18 microservices
 
+            UserViewModel userViewModel = UserController.this.service.getViewModelById(userId);
 
             UserController.this.template
-                    .convertAndSend("/topic/greetings", "Created kingdoms for user: " + this.userId);
+                    .convertAndSend("/user/registration",
+                            serializeJSON(userViewModel, false));
         }
     }
 }
