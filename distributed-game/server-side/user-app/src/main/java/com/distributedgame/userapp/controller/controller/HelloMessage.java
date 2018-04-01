@@ -1,4 +1,4 @@
-package com.distributedgame.gameapp.controller;
+package com.distributedgame.userapp.controller.controller;
 
 public class HelloMessage {
 

@@ -4,10 +4,11 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import 'rxjs/add/operator/map';
 import {HttpParams} from '@angular/common/http';
+import {$} from 'protractor';
 
 @Injectable()
 export class UserService {
-  private serverUrl = 'http://localhost:8080/';
+  private serverUrl = 'http://localhost:5555/';
   private stompClient;
 
   constructor(private http: HttpClient) {
@@ -18,15 +19,17 @@ export class UserService {
   }
 
   public initializeWebSocketConnection() {
-    const ws = new SockJS(this.serverUrl);
+    const ws = new SockJS(this.serverUrl + 'socket');
     this.stompClient = Stomp.over(ws);
-    const that = this;
+    const _this = this;
     this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe('/topic/greetings', (message) => {
+      _this.stompClient.subscribe('/topic/greetings', (message) => {
         if (message.body) {
           console.log(message.body);
         }
       });
+
+      _this.stompClient.send('/app/hello', {}, JSON.stringify({'name': 'yoooooo'}));
     });
   }
 

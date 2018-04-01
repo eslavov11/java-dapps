@@ -1,4 +1,4 @@
-package com.distributedgame.gameapp.config;
+package com.distributedgame.userapp.controller.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -18,7 +18,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/gs-guide-websocket").withSockJS();
+        registry.addEndpoint("/socket")
+                .setAllowedOrigins("*").withSockJS();
     }
 
 }

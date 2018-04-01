@@ -37,6 +37,10 @@
             <version>1.3.2</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.distributed-game</groupId>
             <artifactId>distributed-game-data-access</artifactId>
             <version>${project.version}</version>
