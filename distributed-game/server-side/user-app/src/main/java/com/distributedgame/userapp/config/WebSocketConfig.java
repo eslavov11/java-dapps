@@ -1,4 +1,4 @@
-package com.distributedgame.userapp.controller.config;
+package com.distributedgame.userapp.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

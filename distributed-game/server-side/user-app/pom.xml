@@ -40,11 +40,27 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+
+
         <dependency>
             <groupId>com.distributed-game</groupId>
             <artifactId>distributed-game-data-access</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!--<dependency>-->
+            <!--&lt;!&ndash; Spring Cloud starter &ndash;&gt;-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter</artifactId>-->
+            <!--<version>LATEST</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--&lt;!&ndash; Eureka service registration &ndash;&gt;-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-eureka-server</artifactId>-->
+            <!--<version>LATEST</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>

@@ -1,4 +1,4 @@
-package com.distributedgame.userapp.controller.util;
+package com.distributedgame.userapp.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

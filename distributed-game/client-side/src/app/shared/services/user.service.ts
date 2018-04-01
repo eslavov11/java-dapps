@@ -23,13 +23,13 @@ export class UserService {
     this.stompClient = Stomp.over(ws);
     const _this = this;
     this.stompClient.connect({}, function(frame) {
-      _this.stompClient.subscribe('/topic/greetings', (message) => {
+      _this.stompClient.subscribe('/user/profile', (message) => {
         if (message.body) {
           console.log(message.body);
         }
       });
 
-      _this.stompClient.send('/app/hello', {}, JSON.stringify({'name': 'yoooooo'}));
+      _this.stompClient.send('/user/register', {}, JSON.stringify({'name': 'yoooooo'}));
     });
   }
 
