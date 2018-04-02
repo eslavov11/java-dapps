@@ -7,24 +7,23 @@ const httpOptions = {
 
 @Injectable()
 export class ItemService {
-  private itemUrl = 'http://localhost:8080/item/';
 
   constructor(private http: HttpClient) {
   }
 
   public getItemsForSale() {
-    return this.http.get(this.itemUrl + 'for-sale');
+    return this.http.get('/api/item/for-sale');
   }
 
   public getItem(id) {
-    return this.http.get(this.itemUrl + id);
+    return this.http.get('/api/item/' + id);
   }
 
   public addItem(item) {
-    return this.http.post(this.itemUrl + 'add', item);
+    return this.http.post('/api/item/' + 'add', item);
   }
 
   public buyItem(id) {
-    return this.http.post(this.itemUrl + id + '/buy', null);
+    return this.http.post('/api/item/' + id + '/buy', null);
   }
 }

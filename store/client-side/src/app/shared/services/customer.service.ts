@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import {ApiService} from "./api.service";
 
 @Injectable()
 export class CustomerService {
 
-  constructor(private http:HttpClient) {}
-
-  private customerUrl = 'http://localhost:8080/customer/';
+  constructor(private apiService: ApiService) {}
 
   public createCustomer(customer) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
+    const registerHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     });
 
-    return this.http.post(this.customerUrl + 'register', JSON.stringify(customer), {headers: headers});
+    return this.apiService.post('/api/customer/register', JSON.stringify(customer), registerHeaders).map(() =>{
+      console.log("Register success");
+    });
   }
 
   public getCustomer() {
-    return this.http.get(this.customerUrl + 'profile');
+    return this.apiService.get('/api/customer/profiles');
   }
 }

@@ -4,6 +4,7 @@ import {NgForm} from "@angular/forms";
 import {ContractService} from "../../shared/services/contract.service";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../../shared/services/user.service";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'app-customer-login',
@@ -14,6 +15,7 @@ export class CustomerLoginComponent implements OnInit {
   private credentials = {username: '', password: ''};
 
   constructor(private contractService: ContractService,
+              private authService: AuthService,
               private userService: UserService,
               private router: Router,
               private http: HttpClient) {
@@ -25,16 +27,13 @@ export class CustomerLoginComponent implements OnInit {
   login(f: NgForm) {
     this.credentials.username = f.value.username;
     this.credentials.password = f.value.password;
-    this.userService.login(this.credentials).subscribe(
+    this.authService.login(this.credentials).subscribe(
       data => {
+        this.userService.getMyInfo().subscribe();
         this.router.navigate(['/']);
       },
       error => {
       });
-
-    // this.userService.authenticate(this.credentials, () => {
-    //   this.router.navigateByUrl('/');
-    // });
 
     return false;
   }
