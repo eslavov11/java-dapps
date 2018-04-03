@@ -7,12 +7,21 @@ const httpOptions = {
 
 @Injectable()
 export class ItemService {
-  private itemUrl = 'http://localhost:8080/item/';
+  private serverUrl = 'http://localhost:8080/';
+  private itemUrl = this.serverUrl + 'item/';
 
   constructor(private http: HttpClient) {
   }
 
   public getItemsForSale() {
+    this.http.get(this.serverUrl + 'token').subscribe(data => {
+      const token = data['token'];
+      this.http.get(this.itemUrl + 'for-sale',
+        {headers: new HttpHeaders().set('X-Auth-Token', token)})
+        .subscribe(response => console.log(response));
+    }, () => {
+    });
+
     return this.http.get(this.itemUrl + 'for-sale');
   }
 

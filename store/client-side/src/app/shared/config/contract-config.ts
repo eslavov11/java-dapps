@@ -1,16 +1,43 @@
 export const ContractConfig = {
   contract:
     {
-      address: '0x22e1728b570b583cec5f2694ca5b67ab611409d1',
+      address: '0x57bd62226b17930281220842b592530ed6d0d677',
       abi: [
         {
+          "constant": false,
+          "inputs": [
+            {
+              "name": "name",
+              "type": "string"
+            }
+          ],
+          "name": "registerCustomer",
+          "outputs": [],
+          "payable": false,
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
           "constant": true,
-          "inputs": [],
-          "name": "owner",
+          "inputs": [
+            {
+              "name": "item",
+              "type": "uint256"
+            }
+          ],
+          "name": "getItem",
           "outputs": [
             {
-              "name": "",
-              "type": "address"
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "name": "price",
+              "type": "uint256"
+            },
+            {
+              "name": "sold",
+              "type": "bool"
             }
           ],
           "payable": false,
@@ -19,29 +46,39 @@ export const ContractConfig = {
         },
         {
           "constant": true,
-          "inputs": [
-            {
-              "name": "car",
-              "type": "uint256"
-            }
-          ],
-          "name": "getCar",
+          "inputs": [],
+          "name": "getItems",
           "outputs": [
             {
-              "name": "vin",
-              "type": "bytes32"
-            },
-            {
-              "name": "metaIpfsHash",
-              "type": "bytes"
-            },
-            {
-              "name": "seller",
-              "type": "address"
+              "name": "",
+              "type": "uint256"
             }
           ],
           "payable": false,
           "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "constant": false,
+          "inputs": [
+            {
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "name": "price",
+              "type": "uint256"
+            }
+          ],
+          "name": "addItem",
+          "outputs": [
+            {
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "nonpayable",
           "type": "function"
         },
         {
@@ -59,116 +96,7 @@ export const ContractConfig = {
               "type": "string"
             },
             {
-              "name": "registrationDate",
-              "type": "uint256"
-            },
-            {
-              "name": "shippingAddress",
-              "type": "string"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "name": "orderId",
-              "type": "uint256"
-            }
-          ],
-          "name": "getOrder",
-          "outputs": [
-            {
-              "name": "part",
-              "type": "uint256"
-            },
-            {
-              "name": "date",
-              "type": "uint256"
-            },
-            {
-              "name": "customer",
-              "type": "address"
-            },
-            {
-              "name": "seller",
-              "type": "address"
-            },
-            {
-              "name": "status",
-              "type": "uint8"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "name": "part",
-              "type": "uint256"
-            }
-          ],
-          "name": "getPartForSale",
-          "outputs": [
-            {
-              "name": "partType",
-              "type": "bytes32"
-            },
-            {
-              "name": "car",
-              "type": "uint256"
-            },
-            {
-              "name": "price",
-              "type": "uint256"
-            },
-            {
-              "name": "daysForDelivery",
-              "type": "uint8"
-            },
-            {
-              "name": "metaIpfsHash",
-              "type": "bytes"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "name": "addr",
-              "type": "address"
-            }
-          ],
-          "name": "getSeller",
-          "outputs": [
-            {
-              "name": "name",
-              "type": "string"
-            },
-            {
-              "name": "registrationDate",
-              "type": "uint256"
-            },
-            {
-              "name": "shippingAddress",
-              "type": "string"
-            },
-            {
-              "name": "sellerCars",
-              "type": "uint256[]"
-            },
-            {
-              "name": "sellerOrders",
+              "name": "customerItems",
               "type": "uint256[]"
             }
           ],
@@ -178,200 +106,23 @@ export const ContractConfig = {
         },
         {
           "constant": false,
+          "inputs": [
+            {
+              "name": "item",
+              "type": "uint256"
+            }
+          ],
+          "name": "buyItem",
+          "outputs": [],
+          "payable": true,
+          "stateMutability": "payable",
+          "type": "function"
+        },
+        {
           "inputs": [],
-          "name": "CarPartStore",
-          "outputs": [],
           "payable": false,
           "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "order",
-              "type": "uint256"
-            }
-          ],
-          "name": "rejectPart",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "order",
-              "type": "uint256"
-            }
-          ],
-          "name": "sellerRequestPayment",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "vin",
-              "type": "bytes32"
-            },
-            {
-              "name": "metaIpfsHash",
-              "type": "bytes"
-            }
-          ],
-          "name": "registerCar",
-          "outputs": [
-            {
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "partType",
-              "type": "bytes32"
-            },
-            {
-              "name": "carId",
-              "type": "uint256"
-            },
-            {
-              "name": "price",
-              "type": "uint256"
-            },
-            {
-              "name": "daysForDelivery",
-              "type": "uint8"
-            },
-            {
-              "name": "metaIpfsHash",
-              "type": "bytes"
-            }
-          ],
-          "name": "addPart",
-          "outputs": [
-            {
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "part",
-              "type": "uint256"
-            }
-          ],
-          "name": "buyPart",
-          "outputs": [
-            {
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "new_owner",
-              "type": "address"
-            }
-          ],
-          "name": "transferOwnership",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "orderId",
-              "type": "uint256"
-            }
-          ],
-          "name": "returnPart",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "order",
-              "type": "uint256"
-            }
-          ],
-          "name": "payToSeller",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "name",
-              "type": "string"
-            },
-            {
-              "name": "shippingAddress",
-              "type": "string"
-            }
-          ],
-          "name": "registerSeller",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "name",
-              "type": "string"
-            },
-            {
-              "name": "shippingAddress",
-              "type": "string"
-            }
-          ],
-          "name": "registerCustomer",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "fallback"
+          "type": "constructor"
         }
       ]
     }
