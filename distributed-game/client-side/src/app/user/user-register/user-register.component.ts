@@ -20,7 +20,7 @@ export class UserRegisterComponent implements OnInit {
       password: f.value.password,
     };
 
-    this.userService.initializeWebSocketConnection();
+    this.userService.createUser(user);
     // this.userService.createUser(user).subscribe(
     //   data => {
     //     alert('Registration successful');

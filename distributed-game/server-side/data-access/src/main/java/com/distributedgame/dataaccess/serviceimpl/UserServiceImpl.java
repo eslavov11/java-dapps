@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     public UserViewModel register(UserRegisterModel userRegisterModel) {
         User user = this.modelMapper.map(userRegisterModel, User.class);
 
-        User createdUser = this.repository.saveAndFlush(user);
+        User createdUser = this.repository.save(user);
         return this.modelMapper.map(createdUser, UserViewModel.class);
     }
 
@@ -36,6 +36,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserViewModel getViewModelById(long userId) {
-        return this.modelMapper.map(this.getById(userId), UserViewModel.class);
+        UserViewModel userViewModel = new UserViewModel();
+        User user = this.getById(userId);
+        userViewModel.setId(user.getId());
+        userViewModel.setUsername(user.getUsername());
+
+        return userViewModel;
     }
 }

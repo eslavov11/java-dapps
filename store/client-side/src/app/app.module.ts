@@ -16,6 +16,8 @@ import {Web3Service} from './shared/services/web3.service';
 import {UserService} from './shared/services/user.service';
 import { ItemDetailComponent } from './item/item-detail/item-detail.component';
 import { ItemAddComponent } from './item/item-add/item-add.component';
+import {AuthService} from "./shared/services/auth.service";
+import {ApiService} from "./shared/services/api.service";
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -45,7 +47,7 @@ export class XhrInterceptor implements HttpInterceptor {
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [ContractService, Web3Service, UserService, ItemService, CustomerService,
+  providers: [ContractService, Web3Service, UserService, ItemService, CustomerService, AuthService, ApiService,
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

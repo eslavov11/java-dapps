@@ -44,19 +44,24 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(true);
         user.addRole(this.roleService.getDefaultRole());
 
-        // Additional role
-        if (userRegisterModel.getAdditionalRole() != null) {
-            Role additionalRole = this.roleService.getRoleByAuthority(userRegisterModel.getAdditionalRole());
-            user.addRole(additionalRole);
-        }
+//        // Additional role
+//        if (userRegisterModel.getAdditionalRole() != null) {
+//            Role additionalRole = this.roleService.getRoleByAuthority(userRegisterModel.getAdditionalRole());
+//            user.addRole(additionalRole);
+//        }
 
         return this.userRepository.saveAndFlush(user);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = this.userRepository.findOneByUsername(username);
+    public User loadByUsername(String username) throws UsernameNotFoundException {
+        User u = userRepository.findOneByUsername(username);
+        return u;
+    }
 
-        return user;
+    @Override
+    public User loadById(Long id) {
+        User u = this.userRepository.findOne(id);
+        return u;
     }
 }

@@ -16,7 +16,7 @@ public class User implements Serializable {
 
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "kingdom")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Kingdom> kingdoms;
 
     public User() {

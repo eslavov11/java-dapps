@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -46,15 +47,19 @@ public class KingdomServiceImpl implements KingdomService {
                     .nextInt(MIN_COORD, MAX_COORD + 1));
             kingdom.setYCoord(ThreadLocalRandom.current()
                     .nextInt(MIN_COORD, MAX_COORD + 1));
-        } while (!this.repository
+        } while (this.repository
                 .findByXCoordAndYCoord(kingdom.getXCoord(), kingdom.getYCoord())
                 .isPresent());
     }
 
     @Override
     public List<KingdomViewModel> getAllForUser(long userId) {
-        return this.modelMapper.map(this.repository.findAllByUserId(userId),
-                new TypeToken<List<KingdomViewModel>>() {
-                }.getType());
+        List<KingdomViewModel> kingdomViewModels = new ArrayList<>();
+        this.repository.findAllByUserId(userId).forEach((Kingdom k) -> {
+            KingdomViewModel kingdomViewModel = this.modelMapper.map(k, KingdomViewModel.class);
+            kingdomViewModels.add(kingdomViewModel);
+        });
+
+        return kingdomViewModels;
     }
 }

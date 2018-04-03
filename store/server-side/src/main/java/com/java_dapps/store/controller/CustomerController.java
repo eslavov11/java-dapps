@@ -6,12 +6,14 @@ import com.java_dapps.store.model.viewModel.CustomerViewModel;
 import com.java_dapps.store.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-//@CrossOrigin(origins="*", maxAge=3600)
 @RestController
+
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CustomerController {
     private CustomerService customerService;
 
