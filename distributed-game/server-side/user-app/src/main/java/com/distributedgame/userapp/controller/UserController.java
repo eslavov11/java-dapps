@@ -16,43 +16,21 @@ import static com.distributedgame.userapp.util.Utils.serializeJSON;
 public class UserController {
     private UserService service;
     private WebGameService webGameService;
-    private SimpMessagingTemplate template;
 
     @Autowired
     public UserController(UserService service,
-                          SimpMessagingTemplate template,
                           WebGameService webGameService) {
         this.service = service;
-        this.template = template;
         this.webGameService = webGameService;
     }
-
 
     @MessageMapping("/register")
     @SendTo("/topic/profile")
     public UserViewModel greeting(UserRegisterModel userRegisterModel) throws Exception {
         UserViewModel userViewModel = this.service.register(userRegisterModel);
 
-        new Thread(new GameModuleConnectRunnable(userViewModel.getId())).start();
+        this.webGameService.createKingdomsForUser(userViewModel);
 
         return userViewModel;
-    }
-
-    private class GameModuleConnectRunnable implements Runnable {
-        long userId;
-
-        public GameModuleConnectRunnable(long userId) {
-            this.userId = userId;
-        }
-
-        public void run() {
-            UserController.this.webGameService.createKingdomsForUser(userId);
-
-            UserViewModel userViewModel = UserController.this.service.getViewModelById(userId);
-
-            UserController.this.template
-                    .convertAndSend("/topic/profile",
-                            serializeJSON(userViewModel, false));
-        }
     }
 }

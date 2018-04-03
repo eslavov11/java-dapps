@@ -1,10 +1,13 @@
 package com.distributedgame.userapp.controller;
 
+import com.distributedgame.dataaccess.model.viewmodel.KingdomViewModel;
 import com.distributedgame.dataaccess.service.KingdomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class KingdomController {
@@ -16,9 +19,7 @@ public class KingdomController {
     }
 
     @PostMapping("/kingdom/create-for-user/{userId}")
-    public void createKingdomsForUser(@PathVariable long userId) {
-        for (int i = 0; i < 10; i++) {
-            this.service.createForUser(userId);
-        }
+    public List<KingdomViewModel> createKingdomsForUser(@PathVariable long userId) {
+        return this.service.createForUser(userId);
     }
 }

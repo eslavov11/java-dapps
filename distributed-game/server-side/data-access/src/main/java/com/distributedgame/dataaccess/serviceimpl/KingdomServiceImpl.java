@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -32,13 +33,20 @@ public class KingdomServiceImpl implements KingdomService {
     }
 
     @Override
-    public void createForUser(long userId) {
-        Kingdom kingdom = new Kingdom();
-        kingdom.setUser(this.userService.getById(userId));
+    public List<KingdomViewModel> createForUser(long userId) {
+        List<KingdomViewModel> kingdomViewModels = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Kingdom kingdom = new Kingdom();
+            kingdom.setUser(this.userService.getById(userId));
+            generateKingdomCoordinates(kingdom);
 
-        generateKingdomCoordinates(kingdom);
+            this.repository.saveAndFlush(kingdom);
+            KingdomViewModel kingdomViewModel = this.modelMapper
+                    .map(kingdom, KingdomViewModel.class);
+            kingdomViewModels.add(kingdomViewModel);
+        }
 
-        this.repository.saveAndFlush(kingdom);
+        return kingdomViewModels;
     }
 
     private void generateKingdomCoordinates(Kingdom kingdom) {

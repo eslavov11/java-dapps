@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository repository;
@@ -25,7 +27,7 @@ public class UserServiceImpl implements UserService {
     public UserViewModel register(UserRegisterModel userRegisterModel) {
         User user = this.modelMapper.map(userRegisterModel, User.class);
 
-        User createdUser = this.repository.save(user);
+        User createdUser = this.repository.saveAndFlush(user);
         return this.modelMapper.map(createdUser, UserViewModel.class);
     }
 
