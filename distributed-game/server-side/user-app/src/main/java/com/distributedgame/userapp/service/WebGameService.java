@@ -1,7 +1,11 @@
 package com.distributedgame.userapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -21,9 +25,10 @@ public class WebGameService {
     }
 
     public void createKingdomsForUser(long userId) {
-        Map<String, String> vars = new HashMap<>();
-        vars.put("id", "JS01");
+        HttpHeaders headers = new HttpHeaders();
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-        this.restTemplate.postForEntity(serviceUrl + "kingdom/create-for-user/{userId}", vars, String.class);
+        this.restTemplate.postForEntity(serviceUrl + "kingdom/create-for-user/" + userId, request, String.class);
     }
 }

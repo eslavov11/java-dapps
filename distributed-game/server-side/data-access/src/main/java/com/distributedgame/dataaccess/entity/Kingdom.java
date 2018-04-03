@@ -7,8 +7,7 @@ import java.io.Serializable;
 @Table(name = "kingdoms",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"XCoord", "YCoord"})
-        },
-        indexes = { @Index(name = "IDX_COORDS", columnList = "XCoord,YCoord") })
+        })
 public class Kingdom implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

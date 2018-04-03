@@ -28,8 +28,8 @@ public class UserController {
     }
 
 
-    @MessageMapping("/user/register")
-    @SendTo("/user/profile")
+    @MessageMapping("/register")
+    @SendTo("/topic/profile")
     public UserViewModel greeting(UserRegisterModel userRegisterModel) throws Exception {
         UserViewModel userViewModel = this.service.register(userRegisterModel);
 
@@ -51,7 +51,7 @@ public class UserController {
             UserViewModel userViewModel = UserController.this.service.getViewModelById(userId);
 
             UserController.this.template
-                    .convertAndSend("/user/profile",
+                    .convertAndSend("/topic/profile",
                             serializeJSON(userViewModel, false));
         }
     }

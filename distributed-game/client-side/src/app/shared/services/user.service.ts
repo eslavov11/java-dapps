@@ -3,8 +3,6 @@ import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import 'rxjs/add/operator/map';
-import {HttpParams} from '@angular/common/http';
-import {$} from 'protractor';
 
 @Injectable()
 export class UserService {
@@ -15,21 +13,17 @@ export class UserService {
   }
 
   public createUser(user) {
-    return this.http.post(this.serverUrl + 'register', user);
-  }
-
-  public initializeWebSocketConnection() {
     const ws = new SockJS(this.serverUrl + 'socket');
     this.stompClient = Stomp.over(ws);
     const _this = this;
     this.stompClient.connect({}, function(frame) {
-      _this.stompClient.subscribe('/user/profile', (message) => {
+      _this.stompClient.subscribe('/topic/profile', (message) => {
         if (message.body) {
           console.log(message.body);
         }
       });
 
-      _this.stompClient.send('/user/register', {}, JSON.stringify({'name': 'yoooooo'}));
+      _this.stompClient.send('/app/register', {}, JSON.stringify(user));
     });
   }
 
