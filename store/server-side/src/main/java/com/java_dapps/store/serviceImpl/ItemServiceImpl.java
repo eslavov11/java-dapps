@@ -1,9 +1,11 @@
 package com.java_dapps.store.serviceImpl;
 
+import com.java_dapps.store.entity.Customer;
 import com.java_dapps.store.entity.Item;
 import com.java_dapps.store.model.bindingModel.ItemModel;
 import com.java_dapps.store.model.viewModel.ItemViewModel;
 import com.java_dapps.store.repository.ItemRepository;
+import com.java_dapps.store.service.CustomerService;
 import com.java_dapps.store.service.ItemService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,16 @@ import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
+    private CustomerService customerService;
     private ModelMapper modelMapper;
 
     @Autowired
-    public ItemServiceImpl(ModelMapper modelMapper, ItemRepository itemRepository) {
+    public ItemServiceImpl(ModelMapper modelMapper,
+                           ItemRepository itemRepository,
+                           CustomerService customerService) {
         this.modelMapper = modelMapper;
         this.itemRepository = itemRepository;
+        this.customerService = customerService;
     }
 
     @Override
@@ -53,8 +59,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemViewModel buyItem(long id) {
-        return null;
+    public void buyItem(long id, long userId) {
+        Item item = this.itemRepository.getOne(id);
+        Customer customer = this.customerService.getByUserId(userId);
+
+        item.setCustomer(customer);
+
+        this.itemRepository.saveAndFlush(item);
     }
 
     @Override

@@ -1,3 +1,17 @@
-<p>
-  item-add works!
-</p>
+<h1 class="h1 text-center">Add Item</h1>
+
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" required="required" class="form-control"
+           id="description" name="description" ngModel placeholder="description">
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price</label> (ETH)
+    <input type="text" required="required" class="form-control"
+           id="price" name="price" ngModel placeholder="price">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>

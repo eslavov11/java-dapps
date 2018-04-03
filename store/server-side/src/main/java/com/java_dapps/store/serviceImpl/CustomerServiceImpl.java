@@ -35,10 +35,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerViewModel getByUserId(long userId) {
-        Customer customer = this.customerRepository.findOneByUserId(userId);
+    public Customer getByUserId(long userId) {
+        return this.customerRepository.findOneByUserId(userId);
+    }
 
-        return this.modelMapper.map(customer, CustomerViewModel.class);
+    @Override
+    public CustomerViewModel getViewModelByUserId(long userId) {
+        return this.modelMapper.map(this.getByUserId(userId), CustomerViewModel.class);
     }
 
     @Override

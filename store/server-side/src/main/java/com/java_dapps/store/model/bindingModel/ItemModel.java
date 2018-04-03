@@ -1,18 +1,18 @@
 package com.java_dapps.store.model.bindingModel;
 
 public class ItemModel {
-    private String name;
+    private String description;
     private long price;
 
     public ItemModel() {
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public long getPrice() {

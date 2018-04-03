@@ -12,7 +12,7 @@ public interface ItemService {
 
     ItemViewModel get(long id);
 
-    ItemViewModel buyItem(long id);
+    void buyItem(long id, long userId);
 
     void create(ItemModel itemModel);
 }

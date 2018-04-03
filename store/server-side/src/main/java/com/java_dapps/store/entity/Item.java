@@ -10,7 +10,7 @@ public class Item implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String name;
+    private String description;
 
     private long price;
 
@@ -31,12 +31,12 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public long getPrice() {
@@ -53,5 +53,13 @@ public class Item implements Serializable {
 
     public void setSold(boolean sold) {
         this.sold = sold;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

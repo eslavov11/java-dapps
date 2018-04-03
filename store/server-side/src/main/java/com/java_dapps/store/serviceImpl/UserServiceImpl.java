@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(true);
         user.addRole(this.roleService.getDefaultRole());
 
-//        // Additional role
-//        if (userRegisterModel.getAdditionalRole() != null) {
-//            Role additionalRole = this.roleService.getRoleByAuthority(userRegisterModel.getAdditionalRole());
-//            user.addRole(additionalRole);
-//        }
+        // Additional role
+        if (userRegisterModel.getAdditionalRole() != null) {
+            Role additionalRole = this.roleService.getRoleByAuthority(userRegisterModel.getAdditionalRole());
+            user.addRole(additionalRole);
+        }
 
         return this.userRepository.saveAndFlush(user);
     }

@@ -1,5 +1,6 @@
 package com.java_dapps.store.controller;
 
+import com.java_dapps.store.entity.User;
 import com.java_dapps.store.model.bindingModel.ItemModel;
 import com.java_dapps.store.model.viewModel.ItemViewModel;
 import com.java_dapps.store.service.ItemService;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,12 +46,15 @@ public class ItemController {
     }
 
     @PostMapping("/item/add")
+    @PreAuthorize("hasRole('USER')")
     public void addItem(@RequestBody ItemModel itemModel) {
         this.itemService.create(itemModel);
     }
 
     @PostMapping("/item/{id}/buy")
+    @PreAuthorize("hasRole('CUSTOMER')")
     public void buyItem(@PathVariable long id) {
-        this.itemService.buyItem(id);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        this.itemService.buyItem(id, user.getId());
     }
 }
