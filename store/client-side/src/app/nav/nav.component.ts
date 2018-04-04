@@ -24,12 +24,7 @@ export class NavComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // await this.contractService.loadAccounts();
-    // await this.contractService.getBalance();
-    //
-    // this.balance = this.contractService.accountBalance;
   }
-
 
   public logout() {
     sessionStorage.clear();

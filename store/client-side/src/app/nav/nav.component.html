@@ -9,9 +9,11 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <!--<li class="nav-item">-->
-      <!--<a class="nav-link" routerLink="parts/list">Parts</a>-->
-      <!--</li>-->
+      <div [hidden]="!authenticated()">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="item/add">Add Item</a>
+        </li>
+      </div>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
@@ -21,10 +23,10 @@
           </li>
         </div>
         <div [hidden]="!authenticated()">
-          <li class="nav-item">
+          <li class="nav-item" style="display: inline-block">
             <a class="nav-link" routerLink="/customer/detail">Profile</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" style="display: inline-block">
             <a class="nav-link" [routerLink]="" (click)="logout()">Logout</a>
           </li>
         </div>

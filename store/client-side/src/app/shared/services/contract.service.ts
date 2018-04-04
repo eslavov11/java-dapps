@@ -35,17 +35,13 @@ export class ContractService {
 
   public async getCustomer(account: any) {
     const customerObj = await new Promise((resolve, reject) => {
-      this.contract.getCustomer(account, function (error, result) {
-        if (!error) {
+      this.contract.methods.getCustomer(account).call()
+        .then(result => {
           resolve(result);
-        } else {
-          resolve(false);
-          console.log(error);
-        }
-      });
-    });
+        });
+    }) as any;
 
-    if (!customerObj) {
+    if (!customerObj[0]) {
       return null;
     }
 
@@ -53,42 +49,42 @@ export class ContractService {
     customer.address = account;
     customer.username = customerObj[0];
     customer.items = [];
-    //Todo: CUSTOMEROBJ[1].c ???
-    //customerObj[1].toArray().forEach(itemId => );
+
+    customerObj.customerItems.forEach(async itemId => {
+      const item = await this.getItem(itemId);
+      customer.items.push(item);
+    });
 
     return customer;
   }
 
   public async addItem(item: Item) {
     return await new Promise((resolve, reject) => {
-      this.contract.addPart(item.description, item.price,
-        function (error, result) {
-          if (!error) {
-            resolve(result);
-          }
-          else {
-            console.error(error);
-          }
+      this.contract.methods.addItem(item.description, item.price)
+        .send({
+          from: this.web3Service.account.address,
+          gas: 400000
+        })
+        .then(result => {
+          resolve(result);
         });
     });
   }
 
   public async getItem(id: number) {
     const itemObj = await new Promise((resolve, reject) => {
-      this.contract.getPartForSale(id, function (error, result) {
-        if (!error) {
+      this.contract.methods.getItem(id).call()
+        .then(result => {
           resolve(result);
-        } else {
-          console.error(error);
-        }
-      });
-    });
+        });
+    }) as any;
 
     const item = new Item();
     item.id = id;
-    item.description = this.web3Service.web3.toUtf8(itemObj[0]);
-    item.price = itemObj[1]; // this.web3Service.web3.fromWei(itemObj[1], 'ether').toString(10);
-    item.sold = itemObj[2];
+    item.description = itemObj.description;
+    item.price = this.web3Service
+      .web3.utils.fromWei(itemObj.price.toString(), 'ether')
+    item.sold = itemObj.sold;
 
     return item;
   }
@@ -100,17 +96,14 @@ export class ContractService {
     }
 
     return await new Promise((resolve, reject) => {
-      this.contract.buyPart(itemId, {
-          value: price,
+      this.contract.methods.buyItem(itemId)
+        .send({
+          value: this.web3Service.web3.utils.toWei(price, 'ether'),
           from: this.web3Service.account.address,
           gas: 400000
-        },
-        function (error, result) {
-          if (!error) {
-            resolve(result);
-          } else {
-            console.error(error);
-          }
+        })
+        .then(result => {
+          resolve(result);
         });
     });
   }

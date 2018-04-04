@@ -13,7 +13,7 @@ import {ItemService} from '../../shared/services/item.service';
   styleUrls: ['./item-detail.component.css']
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
-  private item: Item;
+  item: Item;
   private sub: any;
 
   constructor(private contractService: ContractService,
@@ -22,12 +22,17 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private route: ActivatedRoute,
               private router: Router) {
+    this.item = new Item();
   }
 
   async ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.load(params);
     });
+  }
+
+  public authenticated() {
+    return !!this.userService.currentUser;
   }
 
   async load(params: any) {

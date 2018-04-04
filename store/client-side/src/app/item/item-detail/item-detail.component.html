@@ -12,9 +12,11 @@
     </span>
     <br/>
     <br/>
-    <button (click)="this.buy()" class="btn btn-primary">Buy</button>
-    <br/>
-    <br/>
+    <div *ngIf="authenticated() && !this.item.sold">
+      <button (click)="this.buy()" class="btn btn-primary">Buy</button>
+      <br/>
+      <br/>
+    </div>
   </div>
 </div>
 
