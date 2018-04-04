@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {ContractService} from "../../shared/services/contract.service";
 import {ItemService} from "../../shared/services/item.service";
 import {NgForm} from "@angular/forms";
+import {Web3Service} from "../../shared/services/web3.service";
 
 @Component({
   selector: 'app-item-add',
@@ -12,18 +13,20 @@ import {NgForm} from "@angular/forms";
 export class ItemAddComponent implements OnInit {
   constructor(private contractService: ContractService,
               private itemService: ItemService,
+              private web3Service: Web3Service,
               private router: Router) {
   }
   ngOnInit() {
   }
 
   async onSubmit(f: NgForm) {
-    // await this.contractService.registerCustomer(f.value.name);
-
     const item = {
       description: f.value.description,
       price: f.value.price,
     };
+
+    item.price = this.web3Service.web3.toWei(item.price, 'ether');
+
     this.itemService.addItem(item).subscribe(
       data => {
         alert('Item added successfully.');

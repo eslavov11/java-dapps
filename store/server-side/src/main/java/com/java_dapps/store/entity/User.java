@@ -18,6 +18,8 @@ public class User implements UserDetails, Serializable {
 
     private String password;
 
+    @Lob
+    @Column(name="keystore_json", length=1024)
     private String keystoreJson;
 
     private boolean isAccountNonExpired;
@@ -51,6 +53,14 @@ public class User implements UserDetails, Serializable {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getKeystoreJson() {
+        return keystoreJson;
+    }
+
+    public void setKeystoreJson(String keystoreJson) {
+        this.keystoreJson = keystoreJson;
     }
 
     @Override

@@ -1,16 +1,22 @@
 package com.java_dapps.store.serviceImpl;
 
 import com.java_dapps.store.entity.Customer;
+import com.java_dapps.store.entity.Item;
 import com.java_dapps.store.entity.User;
 import com.java_dapps.store.model.bindingModel.CustomerRegisterModel;
 import com.java_dapps.store.model.bindingModel.UserRegisterModel;
 import com.java_dapps.store.model.viewModel.CustomerViewModel;
+import com.java_dapps.store.model.viewModel.ItemViewModel;
 import com.java_dapps.store.repository.CustomerRepository;
 import com.java_dapps.store.service.CustomerService;
+import com.java_dapps.store.service.ItemService;
 import com.java_dapps.store.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -31,7 +37,17 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerViewModel get(long id) {
         Customer customer = this.customerRepository.getOne(id);
 
-        return this.modelMapper.map(customer, CustomerViewModel.class);
+        CustomerViewModel customerViewModel = this.modelMapper.map(customer, CustomerViewModel.class);
+        customerViewModel.setUsername(customer.getUser().getUsername());
+        customerViewModel.setKeystoreJson(customer.getUser().getKeystoreJson());
+        List<ItemViewModel> itemViewModels = new ArrayList<>();
+        customer.getItems().forEach((Item item) -> {
+            ItemViewModel itemViewModel = this.modelMapper.map(item, ItemViewModel.class);
+            itemViewModels.add(itemViewModel);
+        });
+        customerViewModel.setItems(itemViewModels);
+
+        return customerViewModel;
     }
 
     @Override

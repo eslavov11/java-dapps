@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
+import {ContractService} from "./shared/services/contract.service";
+import {Web3Service} from "./shared/services/web3.service";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +10,10 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private contractService: ContractService,
+              private web3Service: Web3Service) {
+    this.web3Service.initWeb3();
+    this.contractService.initContract();
   }
 }

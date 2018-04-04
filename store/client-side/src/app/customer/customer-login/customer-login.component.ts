@@ -5,6 +5,9 @@ import {ContractService} from "../../shared/services/contract.service";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../../shared/services/user.service";
 import {AuthService} from "../../shared/services/auth.service";
+import {Web3Service} from "../../shared/services/web3.service";
+import {Customer} from "../../shared/models/customer";
+import {CustomerService} from "../../shared/services/customer.service";
 
 @Component({
   selector: 'app-customer-login',
@@ -14,9 +17,9 @@ import {AuthService} from "../../shared/services/auth.service";
 export class CustomerLoginComponent implements OnInit {
   private credentials = {username: '', password: ''};
 
-  constructor(private contractService: ContractService,
+  constructor(private web3Service: Web3Service,
               private authService: AuthService,
-              private userService: UserService,
+              private customerService: CustomerService,
               private router: Router,
               private http: HttpClient) {
   }
@@ -24,13 +27,16 @@ export class CustomerLoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login(f: NgForm) {
+  async login(f: NgForm) {
     this.credentials.username = f.value.username;
     this.credentials.password = f.value.password;
     this.authService.login(this.credentials).subscribe(
       data => {
-        this.userService.getMyInfo().subscribe();
-        this.router.navigate(['/']);
+        this.customerService.getCustomer().subscribe(customer => {
+          this.web3Service.initAccount(customer.keystoreJson, this.credentials.password);
+          this.router.navigate(['/']);
+        }, error => {
+        });
       },
       error => {
       });
