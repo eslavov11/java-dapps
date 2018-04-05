@@ -60,7 +60,6 @@ contract Store {
     
     function addItem(string description, uint256 price) 
         public
-        isOwner
         returns(uint256) 
     {
         require(!_stringEmpty(description));
@@ -100,6 +99,7 @@ contract Store {
         payable 
         isCustomer 
     {
+        require(!_stringEmpty(items[item].description) && !items[item].sold);
         customers[msg.sender].items.push(item);
         items[item].sold = true;
     }
