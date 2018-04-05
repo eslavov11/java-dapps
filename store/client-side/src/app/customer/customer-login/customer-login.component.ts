@@ -39,6 +39,7 @@ export class CustomerLoginComponent implements OnInit {
         });
       },
       error => {
+        alert('Invalid username or password.');
       });
 
     return false;

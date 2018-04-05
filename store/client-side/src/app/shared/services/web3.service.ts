@@ -31,7 +31,6 @@ export class Web3Service {
     const account = this.decryptAccount(keystoreJson, password);
     this.account = account;
     this.web3.eth.accounts.wallet.add(this.account);
-    // sessionStorage.setItem('private-key', prKey);
   }
 
   public async getBalance(): Promise<number> {

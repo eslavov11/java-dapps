@@ -1,7 +1,7 @@
 export const ContractConfig = {
   contract:
     {
-      address: '0xa2e31c16a0a0ed6654a77423db37fdacbb52fcb1',
+      address: '0xe4236549f4dc4e710942a4f42f519739b683c052',
       abi: [
         {
           "constant": false,

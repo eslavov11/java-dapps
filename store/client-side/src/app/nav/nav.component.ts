@@ -27,7 +27,6 @@ export class NavComponent implements OnInit {
   }
 
   public logout() {
-    sessionStorage.clear();
     this.authService.logout().subscribe(res => {
       this.router.navigate(['/customer/login']);
     });

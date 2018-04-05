@@ -24,7 +24,7 @@ export class ItemAddComponent implements OnInit {
   async onSubmit(f: NgForm) {
     const item = {
       description: f.value.description,
-      price: f.value.price,
+      price: f.value.price
     };
 
     item.price = this.web3Service.web3.utils.toWei(item.price, 'ether');
