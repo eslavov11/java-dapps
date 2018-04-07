@@ -17,6 +17,7 @@
 
     <modules>
         <module>data-access</module>
+        <module>eureka-service</module>
         <module>user-app</module>
         <module>game-app</module>
     </modules>

@@ -4,6 +4,7 @@ import com.distributedgame.dataaccess.model.viewmodel.KingdomViewModel;
 import com.distributedgame.dataaccess.model.viewmodel.UserViewModel;
 import com.distributedgame.dataaccess.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,11 +25,9 @@ import static com.distributedgame.userapp.util.Utils.serializeJSON;
 
 @Service
 public class WebGameService {
-    private String serviceUrl = "http://localhost:5555/";
+    private String serviceUrl = "http://game-app/";
     private SimpMessagingTemplate messagingTemplate;
 
-    // TODO: 01/04/18 app config also
-//    @LoadBalanced
     private RestTemplate restTemplate;
 
     @Autowired

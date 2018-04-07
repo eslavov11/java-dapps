@@ -1,3 +1,28 @@
-<p>
-  user-detail works!
-</p>
+<h1 class="h1 text-center">User profile</h1>
+<div class="card">
+  <div class="card-block text-center">
+    <br/>
+    <span class="text-muted">
+      Username <strong>{{this.userService.currentUser.username}}</strong>
+    </span>
+    <br/><br/>
+  </div>
+</div>
+<br/><br/>
+
+<h1 class="h1 text-center">Kingdoms</h1>
+
+<div class="row">
+  <div *ngFor="let kingdom of this.userService.currentUser.kingdoms" class="col-md-3">
+    <div class="card mb-4 box-shadow">
+      <div class="card-body">
+        <div class="card-text">
+          <p>
+          <p>X coordinate {{kingdom.xcoord}}</p>
+          <p>Y coordinate {{kingdom.ycoord}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
